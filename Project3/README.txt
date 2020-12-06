@@ -40,7 +40,8 @@ hold down left click to drag the map, hold right click to adjust the angle of th
 screen. There is a plus to zoom in and a minus to zoom out.  Below those are a third control to change the angle by mouse movment.  Next to those three are two buttons, one is
 to reset the zoom, back to the original zoom, the other is to reset the view, back tothe original viewing angle. The final button is a reset favorites which will clear out the 
 favorites list and local storage as well as resets the UI.  With all of these are two checkboxs.  These give the user an option to what they want to see.  They can either both be
-checked or one can be.
+checked or one can be. The other search option is the drop down menu.  Here you can select a random location or city and then go there.
+the three search options: Two checkboxs, the dropdown menu, the favorites list
 
 CITATION:
 In this program there are methods and functions that were inspired by/ used from IGM's Rich Media and Web Dev 1 class taught by Prof Jefferson.  These methods can be found across

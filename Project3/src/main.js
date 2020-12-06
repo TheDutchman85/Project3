@@ -6,6 +6,12 @@ import * as classe from './classes.js';
 // declare some constants
 let favsIndexOld = document.querySelectorAll("#favList li").length;
 let favsIndexNew = document.querySelectorAll("#favList li").length;
+let markers = [];
+let pause = true;
+let created = false;
+let locationCheck = false;
+let cityCheck = false;
+let dType;
 
 const prefix = "ldv9727-";
 const listKey = prefix + "list";
@@ -40,6 +46,7 @@ function loadPOI(type){
       let temp = [p.lon, p.lat];
       let mark = new classe.MapLocation(temp, p.name, "One of my favorite spots", "poi", type);
       mark.addToMap();
+      markers.push(mark);
     }
   }
 
@@ -47,7 +54,9 @@ function loadPOI(type){
   ajax.downloadFile(url, poiLoaded);
 }
 
+//To set up the UI for the application
 function setupUI(){
+  //Buttons
   document.querySelector("#resetZoom").onclick = () => {
     map.setZoomLevel(2);
   }
@@ -77,7 +86,6 @@ function init(){
     loadPOI("cities");
     bCities = false;
   }
-
   //To set up the UI
   setupUI();
   //To update the UI
@@ -87,21 +95,65 @@ function init(){
 //To run the mechanics that can change based on input
 function update(){
   requestAnimationFrame(update);
-
+  
   //Load in the markers
   if(bLocation){
     loadPOI("locations");
     bLocation = false;
+    dType = "#locations";
   }
   if(bCities){
     loadPOI("cities");
     bCities = false;
+    dType = "#cities";
+  }
+
+  //To determine what is checked
+  if(document.querySelectorAll("#locations").length != 0 || document.querySelectorAll("#cities").length != 0){
+    pause = false;
+    if(document.querySelectorAll("#locations").length != 0){
+      dType = "#locations";
+    } else{
+      dType = "#cities";
+    }
+  }else{
+    pause = true;
+  }
+
+  //Pulldown menu creation
+  if(!pause && !created){
+    if(document.querySelector("#locationC").checked || document.querySelector("#cityC").checked){
+      //Pulldown menu
+      let places = document.querySelector("#places");
+      for(let i = 0; i < 4; i++){
+        let random = markers[Math.floor(Math.random()* document.querySelectorAll(dType).length)];
+        let option = document.createElement("option");
+        option.innerHTML = random.name;
+        option.id = "op";
+        option.value = i;
+        option.setAttribute("lon",random.location[0]);
+        option.setAttribute("lat",random.location[1]);
+        places.appendChild(option);
+      }
+      created = true;
+    }
   }
 
   //To handle the checkboxes
   document.querySelector("#locationC").onclick = (e) => {
     bLocation = document.querySelector("#locationC").checked;
     if(!bLocation){
+      created = false;
+      removeOld("#op");
+      if(markers[0].type == "locations"){
+        for(let i = 0; i < document.querySelectorAll("#locations").length; i++){
+          markers.shift();
+        }
+      }else{
+        for(let i = 0; i < document.querySelectorAll("#locations").length; i++){
+          markers.pop();
+        }
+      }
       removeOld("#locations");
     }
   }
@@ -109,6 +161,17 @@ function update(){
   document.querySelector("#cityC").onclick = (e) => {
     bCities = document.querySelector("#cityC").checked;
     if(!bCities){
+      created = false;
+      removeOld("#op");
+      if(markers[0].type == "cities"){
+        for(let i = 0; i < document.querySelectorAll("#cities").length; i++){
+          markers.shift();
+        }
+      }else{
+        for(let i = 0; i < document.querySelectorAll("#cities").length; i++){
+          markers.pop();
+        }
+      }
       removeOld("#cities");
     }
   }
@@ -146,6 +209,18 @@ function update(){
       }
     }
   }
+
+  //If the pulldown is clicked
+  document.querySelector("#dropButton").onclick = e => {
+    const ops = document.querySelectorAll("#places option");
+    if(ops.length != 0){
+      let indexDB = document.querySelector("#places").value;
+      map.setZoomLevel(12);
+      map.setPitchAndBearing(0,0);
+      const location = [parseFloat(ops[indexDB].getAttribute("lon")),parseFloat(ops[indexDB].getAttribute("lat"))];
+      map.flyTo(location);
+    }
+  }
   
   //Update the local storage
   if(favsIndexNew != favsIndexOld){
@@ -171,8 +246,8 @@ function addToFav(string, _longitude, _latitude){
 
 //To remove unwanted markers
 function removeOld(name){
-  let markers = document.querySelectorAll(name);
-  for(let m of markers){
+  let markerss = document.querySelectorAll(name);
+  for(let m of markerss){
     m.remove();
   }
 }
