@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8' />
+    <title>Lucas' Favorites</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="styles/default-styles.css" />
+    <script src="src/loader.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+    <div id='map'></div>
+    <div id="display">
+        <h1>Welcome to Lucas' Favorites</h1>
+        <p>In this web application you can travel around the map to find my favorite places.</p>
+        <br>
+        <input type="checkbox" id="cityC" name="city" value="city">
+        <label for="cityC">Cities</label>
+        <input checked="checked" type="checkbox" id="locationC" name="location" value="location">
+        <label for="locationC">Locations</label><br>
+        <h2>Controls</h2>
+        <ul>
+            <li>Left-click (drag): move the map</li>
+            <li>Right-click (drag): Change the angle of the map</li>
+            <li>Scroll Wheel: Zoom in and out</li>
+        </ul>
+        <br>
+        <h2>Favorites</h2>
+        <ul id="favList">
+        </ul>
+        <button id="resetFav">Reset Favorites</button>
+    </div>
+    <nav>
+        <div id="mainControls">
+            <button id="resetZoom">Reset Zoom</button>
+            <button id="resetView">Reset View</button>
+        </div>
+    </nav>
+    <footer>Created by: Lucas Veldman 12/6/20</footer>
+</main>
+</body>
+</html>
