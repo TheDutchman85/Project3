@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.marker {
+    background-image: url('../images/mapbox-icon.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.poi{
+    background-image: url('../images/mapbox-icon.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#display{
+    position: absolute;
+    padding: 5px;
+    z-index: 1;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    height: 500px;
+    background-color: lightgray;
+    border: 1px solid black;
+    height: auto;
+}
+
+#mainControls{
+    position: absolute;
+    padding: 5px;
+    z-index: 1;
+    top: 5px;
+    right: 40px;
+    height: auto;
+}
+
+#mainControls button{
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+#favList li:hover{
+    font-size: larger;
+    font-weight: bold;
+}
+
+h1, h2, button{
+    font-family: 'Carter One', cursive;
+}
+
+footer{
+    position: absolute;
+    bottom: 10px;
+    left: 47%;
+    color: white;
+}
